@@ -11,7 +11,7 @@ import { NodoService } from '../services/nodo/nodo.service';
 import { ProveedorService } from '../services/proveedor/proveedor.service';
 import { ReferenciasService } from '../services/referencias/referencias.service';
 import * as XLSX from 'xlsx';
-import { ScannerQRCodeConfig, ScannerQRCodeResult } from 'ngx-scanner-qrcode';
+
 
 
 
@@ -108,16 +108,6 @@ export class ConsultarInventarioComponent implements OnInit {
   variableError: any;
 
 
-  public configQR: ScannerQRCodeConfig = {
-    constraints: {
-      video: {
-        width: window.innerWidth
-      }
-    }
-
-
-
-  };
 
   public isScannerVisible: boolean = false;
   public isAnotherCondition: boolean = false;
@@ -786,33 +776,8 @@ export class ConsultarInventarioComponent implements OnInit {
 
 
 
-  public onEvent(e: ScannerQRCodeResult[], action?: any): void {
-    this.action = action;
-    this.Serial= e[0].value
-
-    this.isScannerVisible = false;
 
 
-  }
-
-  public handle(action: any, fn: string): void {
-
-    const playDeviceFacingBack = (devices: any[]) => {
-      // front camera or back camera check here!
-      const device = devices.find(f => (/back|rear|environment/gi.test(f.label))); // Default Back Facing Camera
-      action.playDevice(device ? device.deviceId : devices[0].deviceId);
-    }
-
-    if (fn === 'start') {
-
-      this.isScannerVisible = true;
-      action[fn](playDeviceFacingBack).subscribe((r: any) => console.log(fn, r), alert);
-    } else {
-
-      this.isScannerVisible = false;
-      action[fn]().subscribe((r: any) => console.log(fn, r), alert);
-    }
-  }
 
 
 

@@ -317,22 +317,6 @@
                   <label class="form-label">Serial</label>
                   <input type="text" #serial name="Serial  "  placeholder="Ingresa el serial del activo" [(ngModel)]="Serial"  class="form-control bg-dark border-secondary text-white">
                   <!-- <input type="button"    (click)="limpiar()"   value="Limpiar" class="btn "> -->
-
-                 <br> <div class="d-flex" >
-                    <button class="btn" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="action.isLoading" (click)="handle(action, action.isStart ? 'stop' : 'start')">
-                      <img [src]="action.isStart ? 'https://id1945.github.io/images/svg/camera-off.svg' : 'https://id1945.github.io/images/svg/camera-on.svg'" width="20px" />
-                    </button>
-
-                    <select #select1 (change)="action.playDevice(select1.value)" class="form-select w-25 bg-dark text-white mx-2  border-secondary">
-                      <option [value]="null" selected>Select device</option>
-                      <option *ngFor="let c of action.devices.value; let i = index" [value]="c.deviceId" [selected]="i == action.deviceIndexActive">{{c.label}}</option>
-                    </select>
-                  </div>
-
-                  <ngx-scanner-qrcode #action="scanner" [config]="configQR" (event)="onEvent($event, action)" [ngClass]="{'hidden-scanner': isScannerVisible==false}"></ngx-scanner-qrcode>
-
-                  <p *ngIf="isScannerVisible==true">⌛ Cargando...</p>
-
                 </div>
 
                 <div class="mb-3">

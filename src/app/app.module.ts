@@ -30,11 +30,6 @@ import { ProveedoresComponent } from './proveedores/proveedores.component';
 import { ActaMovimientoComponent } from './actaMovimiento/acta-movimiento/acta-movimiento.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
-
-LOAD_WASM().subscribe((res: any) => console.log('LOAD_WASM', res));
-
-
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TecnicosComponent } from './tecnicos/tecnicos/tecnicos.component';
@@ -118,7 +113,6 @@ const appRoutes: Routes = [
     BrowserModule,
     Ng2SearchPipeModule,
     FormsModule,
-    NgxScannerQrcodeModule,
     NgxPaginationModule,
     OrderModule,
     DataTablesModule,
