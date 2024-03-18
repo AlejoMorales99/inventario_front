@@ -1,0 +1,21 @@
+
+li ul{
+  background-color: #1B1F23;
+}
+li a:hover{
+  background-color: #0099ef;
+  border-radius: 10px;
+}
+
+
+.fondoBoton{
+  background-color: #0099ef;
+}
+
+.botonesActa{
+  background-color: #0099ef;
+}
+
+.botonesActa:hover{
+  background-color: #1B74A7;
+}

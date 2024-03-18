@@ -1,0 +1,412 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid  slide-in  p-5 ">
+
+
+
+  <div class="row borderTable ">
+
+
+
+    <div class="fondoTable  text-white text-center p-3 " >
+      INVENTARIO ACTIVOS FIJOS
+    </div>
+
+
+    <div class="col-md-12">
+
+        <div class="row  rounded table-responsive">
+
+          <label *ngIf="validarTotalOnts" class="text-white mt-3" for="">TOTAL ONTS EN TU INVENTARIO:   {{totalOnts[0].total}}</label>
+
+          <div class="mb-3 d-md-flex flex-md-row flex-md-nowrap align-items-center mt-4">
+
+            <input (keyup.enter)="buscarRegistro()" class="form-control botonesActa mb-3 w-50 bg-dark border-secondary text-white  " placeholder="BUSCADOR" name="search" [(ngModel)]="buscarActivos" autocomplete="on">
+
+             <select   class="form-select botonesActa mx-2  mb-3 w-auto bg-dark text-white border-secondary" (change)="filtroLimpiar($event.target)" [(ngModel)]="selectedColumn">
+              <option value="mostrarTodo">Filtrar todo</option>
+              <option value="Numero activo fijo">Numero activo fijo</option>
+              <option value="Serial">Serial</option>
+              <option value="MAC">MAC</option>
+              <option *ngIf="operacionesRol" value="fecha">fecha</option>
+              <option *ngIf="operacionesRol" value="categoria">categoria</option>
+              <option *ngIf="operacionesRol" value="estado">estado</option>
+              <option *ngIf="operacionesRol" value="proveedor">proveedor</option>
+              <option *ngIf="operacionesRol" value="servicio">servicio</option>
+              <option *ngIf="operacionesRol" value="fechabodega">fecha/bodega</option>
+            </select>
+
+
+            <div class="form-group text-center  ">
+              <label class="text-white" *ngIf="fechaReporte"  for="fechaInicio">Fecha de Inicio</label>
+              <input *ngIf="fechaReporte" class="form-control  bg-dark text-white mx-2" type="date" id="fechaInicio" [(ngModel)]="fechaInicio">
+            </div>
+
+            <div class="form-group text-center ">
+              <label class="text-white"  *ngIf="fechaReporte" for="fechaFin">Fecha de Fin</label>
+              <input *ngIf="fechaReporte" class="form-control bg-dark text-white " type="date" id="fechaFin" [(ngModel)]="fechaFin">
+            </div>
+
+            <button  type="button" class="btn botonesActa fondoTable text-white mx-2 w-25 mb-3  mx-md-5" (click)="buscarRegistro()" >
+
+
+
+              Buscar
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+
+            </button>
+
+
+
+            <button *ngIf="operacionesRol" type="button" class="btn botonesActa fondoTable text-white mx-2 w-50 mb-3   mx-md-5" (click)="focusSerialInicio()"  data-bs-toggle="modal"  data-bs-target="#modalActivosFijos">
+
+
+              Registrar activos fijos
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+              </svg>
+
+
+            </button>
+
+            <!-- <button *ngIf="operacionesRol" type="button" class="btn botonesActa fondoTable text-white mx-2 w-50 mb-3 mx-md-5"data-bs-toggle="modal" data-bs-target="#modalSegundo">
+
+
+              Registrar activo fijo manual
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+              </svg>
+
+            </button> -->
+
+            <button class="btn  botonesActa  text-white " *ngIf="operacionesRol"  (click)="generateExcelReport()">
+              Generar Reporte
+
+
+            </button>
+          </div>
+
+          <table id="tableOntsActivosFijos"   class="table table-dark table-hover table-striped  text-white hover text-center">
+            <thead>
+              <tr>
+                <th scope="col" class="tamañoTitulos" (click)="cambiarOrden('numeroActivo')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'numeroActivo' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'numeroActivo' && config.sortOrder === 'desc'}" >NÚMERO ACTIVO FIJO</th>
+                <th scope="col" class="tamañoTitulos"(click)="cambiarOrden('MAC')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'MAC' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'MAC' && config.sortOrder === 'desc'}" >SERIAL</th>
+                <th scope="col" class="tamañoTitulos"(click)="cambiarOrden('macSerial')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'macSerial' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'macSerial' && config.sortOrder === 'desc'}" >MAC</th>
+                <th *ngIf="colTecnicosMostrar" scope="col" class="tamañoTitulos"(click)="cambiarOrden('referencia')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'referencia' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'referencia' && config.sortOrder === 'desc'}" >referencia</th>
+                <th *ngIf="colTecnicosMostrar" scope="col" class="tamañoTitulos"(click)="cambiarOrden('marca')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'marca' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'marca' && config.sortOrder === 'desc'}" >marca</th>
+                <th scope="col" class="tamañoTitulos"(click)="cambiarOrden('descripcion')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'descripcion' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'descripcion' && config.sortOrder === 'desc'}"  >DESCRIPCIÓN</th>
+                <th *ngIf="operacionesRol" scope="col" class="tamañoTitulos"(click)="cambiarOrden('fechaIngreso')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'fechaIngreso' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'fechaIngreso' && config.sortOrder === 'desc'}" >FECHA_INGRESO</th>
+                <th *ngIf="operacionesRol" scope="col" class="tamañoTitulos"(click)="cambiarOrden('fechaModificacion')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'fechaModificacion' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'fechaModificacion' && config.sortOrder === 'desc'}" >FECHA_MODIFICACIÓN</th>
+                <th *ngIf="operacionesRol" scope="col" class="tamañoTitulos"(click)="cambiarOrden('categoria')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'categoria' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'categoria' && config.sortOrder === 'desc'}" >CATEGORÍA</th>
+                <th *ngIf="operacionesRol" scope="col" class="tamañoTitulos"(click)="cambiarOrden('estado')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'estado' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'estado' && config.sortOrder === 'desc'}" >ESTADO</th>
+                <th *ngIf="operacionesRol" scope="col" class="tamañoTitulos"(click)="cambiarOrden('proveedor')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'proveedor' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'proveedor' && config.sortOrder === 'desc'}" >PROVEEDOR</th>
+                <th *ngIf="operacionesRol" scope="col" class="tamañoTitulos" (click)="cambiarOrden('referencia')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'referencia' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'referencia' && config.sortOrder === 'desc'}" >REFERENCIA</th>
+                <th *ngIf="operacionesRol" scope="col" class="tamañoTitulos"(click)="cambiarOrden('servicio')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'servicio' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'servicio' && config.sortOrder === 'desc'}" >SERVICIO</th>
+                <!-- <th scope="col" (click)="cambiarOrden('tipo_modificacion')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'tipo_modificacion' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'tipo_modificacion' && config.sortOrder === 'desc'}" >TIPO_MODIFICACION</th> -->
+                <th *ngIf="operacionesRol" scope="col" class="tamañoTitulos" (click)="cambiarOrden('usuario')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'usuario' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'usuario' && config.sortOrder === 'desc'}" >USUARIO QUE REGISTRO</th>
+                <th *ngIf="operacionesRol" scope="col" class="tamañoTitulos" (click)="cambiarOrden('usuarioModifica')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'usuarioModifica' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'usuarioModifica' && config.sortOrder === 'desc'}" >USUARIO QUE MODIFICO</th>
+                <th class="tamañoTitulos" *ngIf="operacionesRol" colspan="3" scope="col">OPERACIONES</th>
+              </tr>
+            </thead>
+            <tbody>
+
+
+
+
+               <tr class="animacion" *ngFor="let activosFijos of activosFijosInventario  | orderBy:config.sortKey:config.sortReverse   | paginate: { itemsPerPage: itemsPerPage, currentPage:  page } " >
+                <td>{{activosFijos.numeroActivo}} </td>
+                <td>{{activosFijos.serial}}</td>
+                <td>{{activosFijos.MAC}}</td>
+                <td *ngIf="colTecnicosMostrar">{{activosFijos.referencia_ont}}</td>
+                <td *ngIf="colTecnicosMostrar">{{activosFijos.marcacol}}</td>
+                <td>{{activosFijos.descripcion}}</td>
+                <td *ngIf="operacionesRol">{{activosFijos.fechaIngreso}}</td>
+                <td *ngIf="operacionesRol">{{activosFijos.fechaModificacion}}</td>
+                <td *ngIf="operacionesRol" >{{activosFijos.categoria}}</td>
+                <td *ngIf="operacionesRol" >{{activosFijos.estado}}</td>
+                <td *ngIf="operacionesRol" >{{activosFijos.proveedor}}</td>
+                <td *ngIf="operacionesRol" >{{activosFijos.referencia}}</td>
+                <td *ngIf="operacionesRol">{{(activosFijos.servicio || activosFijos.servicio_Cliente) }}</td>
+                <td *ngIf="operacionesRol">{{activosFijos.usuario}}</td>
+                <td *ngIf="operacionesRol">{{activosFijos.usuarioModifica}}</td>
+
+                <td *ngIf="operacionesRol" >
+                  <button [routerLink]= "['/editarActivoFijo', activosFijos.idactivoFijo]" class="btn botonesActa fondoTable text-white">
+
+
+
+                    Editar
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                      <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                    </svg>
+                  </button>
+                </td>
+
+              </tr>
+
+
+
+            </tbody>
+          </table>
+          <div class="d-flex  justify-content-center mt-3 flex-wrap">
+
+
+              <label class="text-white" for="itemsPerPage">Registros por página:</label>
+              <div class="mx-2" >
+                <select class="form-select w-100 bg-dark text-white border-secondary mx-2" id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="actualizarPaginacion()">
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="40">40</option>
+                  <option value="80">80</option>
+                  <option value="160">160</option>
+                  <option value="320">320</option>
+                  <!-- Agrega más opciones según tus necesidades -->
+                </select>
+              </div>
+
+            <pagination-controls (pageChange)="page = $event" class="custom-pagination text-white" previousLabel="Anterior"
+            nextLabel="Siguiente"></pagination-controls>
+          </div>
+
+
+        </div>
+
+    </div>
+
+
+
+  </div> <br> <br><br>
+
+
+
+  <!--MODAL PARA REGISTRAR NUEVOS ACTIVOS-->
+  <div class="modal fade  "  id="modalActivosFijos" tabindex="-1" aria-labelledby="modalActivosFijos" aria-hidden="true">
+    <div class="modal-dialog  ">
+      <div class="modal-content bg-dark text-white ">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Registrar activo fijo</h5>
+
+          <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+
+          <form>
+
+            <div class="row">
+
+              <div class="col-md-12">
+
+                <div class="mb-3">
+                  <label class="form-label">Serial</label>
+                  <input type="text" #serial name="Serial  " autocomplete="off"  (input)="escanear()"  placeholder="Ingresa el serial del activo" [(ngModel)]="Serial"  class="form-control bg-dark border-secondary text-white">
+
+
+                  <div class="d-flex" >
+
+                    <input type="button"    (click)="limpiar()"   value="Limpiar" class="btn text-white ">
+
+
+                  </div>
+
+                </div>
+
+
+
+
+                <div class="mb-3">
+                  <label class="form-label">MAC</label>
+                  <input type="text" name="mac  " autocomplete="off" #macEscanear (focus)="validarSerial()" (input)="escanearMac()" id="macQR"  placeholder="Ingresa la mac del activo" [(ngModel)]="mac" class="form-control bg-dark border-secondary text-white" >
+                  <input type="button"    (click)="limpiarMac()"   value="Limpiar" class="btn text-white ">
+                </div>
+
+
+
+                <label class="form-label">Referencia</label>
+                <ng-select  name="referenciaText" [notFoundText]="'Referencia no encontrada'" #referenciaValidar  [(ngModel)]="referenciaText" class="form-select  mb-3 bg-dark border-secondary text-white" aria-label="Default select example" >
+                  <ng-option class="text-white" *ngFor="let referencia of referenciaInventario" [value]="referencia.idreferencia">{{referencia.nombre}}-{{referencia.Marca}}-{{referencia.Nodo}}-{{referencia.wifi}}-{{referencia.nombreEquipo}}</ng-option>
+               </ng-select>
+
+
+                <label class="form-label">Categoría</label>
+                <select name="Categoria" [(ngModel)]="categoria" class="form-select mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+                  <option *ngFor="let categoria of categoriasInventario" selected value="{{categoria.idcategoriaInv}}"  >{{categoria.nombre}}</option>
+                </select>
+
+
+                <label class="form-label">Proveedor</label>
+                <select name="proveedor" [(ngModel)]="proveedor" class="form-select mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+                  <option *ngFor="let proveedor of prooveedorInventario" selected value="{{proveedor.idproveedorInven}}"  >{{proveedor.nombre}}</option>
+                </select>
+
+                <label class="form-label">Bodega</label>
+                <select name="bodega" [(ngModel)]="bodega" class="form-select mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+
+                  <option value="2" >ALCALA1</option>
+                  <option value="3" >ALCALA2</option>
+
+
+                </select>
+
+                <label class="form-label">descripción Adicional</label>
+                <div class="form-floating mb-3">
+                  <textarea name="textArea" [(ngModel)]="textArea" class="form-control bg-dark border-secondary text-white" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                  <label for="floatingTextarea">Agrega una descripcion</label>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+
+
+
+              <button type="button" class="btn  btn-danger" data-bs-dismiss="modal">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                </svg>
+
+                Cerrar
+              </button>
+
+              <button (click)="registrarActivoFijo()" type="button" class="btn botonesActa text-white">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+                </svg>
+
+                Registrar
+              </button>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal fade" id="modalSegundo" tabindex="-1" aria-labelledby="modalSegundoLabel" aria-hidden="true">
+    <div class="modal-dialog  ">
+      <div class="modal-content bg-dark text-white ">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Registrar poe</h5>
+          <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+
+          <form>
+
+            <div class="row">
+
+              <div class="col-md-12">
+
+
+                <div class="mb-3">
+                  <label class="form-label">Serial</label>
+                  <input type="text" #serial name="Serial  "  placeholder="Ingresa el serial del activo" [(ngModel)]="Serial"  class="form-control bg-dark border-secondary text-white">
+                  <!-- <input type="button"    (click)="limpiar()"   value="Limpiar" class="btn "> -->
+
+                 <br> <div class="d-flex" >
+                    <button class="btn" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="action.isLoading" (click)="handle(action, action.isStart ? 'stop' : 'start')">
+                      <img [src]="action.isStart ? 'https://id1945.github.io/images/svg/camera-off.svg' : 'https://id1945.github.io/images/svg/camera-on.svg'" width="20px" />
+                    </button>
+
+                    <select #select1 (change)="action.playDevice(select1.value)" class="form-select w-25 bg-dark text-white mx-2  border-secondary">
+                      <option [value]="null" selected>Select device</option>
+                      <option *ngFor="let c of action.devices.value; let i = index" [value]="c.deviceId" [selected]="i == action.deviceIndexActive">{{c.label}}</option>
+                    </select>
+                  </div>
+
+                  <ngx-scanner-qrcode #action="scanner" [config]="configQR" (event)="onEvent($event, action)" [ngClass]="{'hidden-scanner': isScannerVisible==false}"></ngx-scanner-qrcode>
+
+                  <p *ngIf="isScannerVisible==true">⌛ Cargando...</p>
+
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">MAC</label>
+                  <input type="text" name="mac  " #macEscanear (focus)="validarSerial()"   placeholder="Ingresa la mac del activo" [(ngModel)]="mac" class="form-control bg-dark border-secondary text-white" >
+                  <!-- <input type="button"    (click)="limpiarMac()"   value="Limpiar" class="btn "> -->
+                </div>
+
+                <label class="form-label">Referencia</label>
+                <ng-select  name="referenciaText" #referenciaValidar [(ngModel)]="referenciaText" class="form-select  mb-3 bg-dark border-secondary text-white" aria-label="Default select example" >
+                  <ng-option class="text-white" *ngFor="let referencia of referenciaInventario" [value]="referencia.idreferencia">{{referencia.nombre}}-{{referencia.Marca}}-{{referencia.Nodo}}-{{referencia.wifi}}</ng-option>
+               </ng-select>
+
+                <label class="form-label">Categoria</label>
+                <select name="Categoria" [(ngModel)]="categoria" class="form-select mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+                  <option *ngFor="let categoria of categoriasInventario" selected value="{{categoria.idcategoriaInv}}"  >{{categoria.nombre}}</option>
+                </select>
+
+
+                <label class="form-label">Proveedor</label>
+                <select name="proveedor" [(ngModel)]="proveedor" class="form-select mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+                  <option *ngFor="let proveedor of prooveedorInventario" selected value="{{proveedor.idproveedorInven}}"  >{{proveedor.nombre}}</option>
+                </select>
+
+                <label class="form-label">Bodega</label>
+                <select name="bodega" [(ngModel)]="bodega" class="form-select mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+
+                  <option value="2" >ALCALA1</option>
+                  <option value="3" >ALCALA2</option>
+
+
+                </select>
+
+                <label class="form-label">descripcion Adicional</label>
+                <div class="form-floating mb-3">
+                  <textarea name="textArea" [(ngModel)]="textArea" class="form-control bg-dark border-secondary text-white" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                  <label for="floatingTextarea">Agrega una descripcion</label>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+              <button type="button" class="btn  btn-danger" data-bs-dismiss="modal">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                </svg>
+
+                Cerrar
+              </button>
+
+              <button (click)="registrarActivoFijo()" type="button" class="btn botonesActa text-white">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                  <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+                </svg>
+
+                Registrar
+              </button>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+
+<ng-progress></ng-progress>

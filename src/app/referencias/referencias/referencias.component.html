@@ -1,0 +1,151 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid  slide-in mt-5 p-5 ">
+
+
+
+  <div class="row borderTable ">
+
+
+
+    <div class="fondoTable  text-white text-center p-3 " >
+      INVENTARIO REFERENCIAS
+    </div>
+
+
+    <div class="col-md-12">
+
+        <div class="row  rounded table-responsive">
+
+          <div class="mb-3 d-md-flex flex-md-row flex-md-nowrap align-items-center mt-4">
+
+            <input class="form-control mx-2 mb-2 mb-md-0 bg-dark border-secondary text-white w-auto w-md-25" placeholder="BUSCAR ACTIVO FIJO" type="search" name="search" [(ngModel)]="buscarActivos" autocomplete="on" >
+            <button *ngIf="operacionesRol" (click)="limpiar()" type="button" class="btn fondoTable text-white mx-2 mx-md-5" data-bs-toggle="modal" data-bs-target="#modalActivosFijos">Registrar Referencia</button>
+
+          </div>
+
+          <table    class="table   text-white hover text-center">
+            <thead>
+              <tr>
+                <th scope="col" class="tamañoTitulos"  (click)="cambiarOrden('ID')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'ID' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'ID' && config.sortOrder === 'desc'}" >ID</th>
+                <th scope="col" class="tamañoTitulos" (click)="cambiarOrden('nombre')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'nombre' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'nombre' && config.sortOrder === 'desc'}" >NOMBRE</th>
+                <th scope="col" class="tamañoTitulos" (click)="cambiarOrden('Marca')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'Marca' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'Marca' && config.sortOrder === 'desc'}" >MARCA</th>
+                <th scope="col" class="tamañoTitulos" (click)="cambiarOrden('wifi')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'wifi' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'wifi' && config.sortOrder === 'desc'}" >WIFI</th>
+                <th scope="col" class="tamañoTitulos" (click)="cambiarOrden('Nodo')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'Nodo' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'Nodo' && config.sortOrder === 'desc'}"  >CONEXION NODO</th>
+                <th scope="col" class="tamañoTitulos" (click)="cambiarOrden('equipo')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'equipo' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'equipo' && config.sortOrder === 'desc'}"  >TIPO EQUIPO</th>
+                <th>OPERACIONES</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr *ngFor="let activosFijos of referencias | filter:buscarActivos  | orderBy:config.sortKey:config.sortReverse   | paginate: { itemsPerPage: itemsPerPage, currentPage:  page } " >
+                <th>{{activosFijos.idreferencia}}</th>
+                <td>{{activosFijos.nombre}} </td>
+                <td>{{activosFijos.Marca}}</td>
+                <td>{{activosFijos.wifi}}</td>
+                <td>{{activosFijos.Nodo}}</td>
+                <td>{{activosFijos.nombreEquipo}}</td>
+
+                <td *ngIf="operacionesRol" >
+                  <button [routerLink]= "['/referenciasActivosFijosEditar', activosFijos.idreferencia]" class="btn botonesActa fondoTable text-white">
+
+                    Editar
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                      <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                    </svg>
+
+                  </button>
+                </td>
+
+            </tbody>
+          </table>
+          <div class="d-flex  justify-content-center mt-3 flex-wrap">
+
+
+            <label class="text-white" for="itemsPerPage">Registros por página:</label>
+            <div class="mx-2" >
+              <select class="form-select w-100 bg-dark text-white border-secondary mx-2" id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="actualizarPaginacion()">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <!-- Agrega más opciones según tus necesidades -->
+              </select>
+            </div>
+
+          <pagination-controls (pageChange)="page = $event" class="custom-pagination text-white " previousLabel="Anterior"
+          nextLabel="Siguiente"></pagination-controls>
+        </div>
+
+
+        </div>
+
+    </div>
+
+
+
+  </div> <br> <br><br>
+
+
+<!--MODAL PARA REGISTRAR NUEVOS ACTIVOS-->
+<div class="modal fade  "  id="modalActivosFijos" tabindex="-1" aria-labelledby="modalActivosFijos" aria-hidden="true">
+  <div class="modal-dialog  ">
+    <div class="modal-content bg-dark text-white ">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registrar Referencia</h5>
+        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="">
+
+          <div class="row">
+
+            <div class="col-md-12">
+
+              <div class="mb-3">
+                <label class="form-label">Referencia</label>
+                <input type="text" name="referenciaText"  placeholder="Ingrese la Referencia" [(ngModel)]="referenciaText" class="form-control bg-dark border-secondary text-white">
+              </div>
+
+                <label class="form-label">Marca</label>
+                <select name="Marca" [(ngModel)]="marcaText"  class="form-select mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+                  <option *ngFor="let marca of marcas" value="{{marca.idmarca}}" >{{marca.marcacol}}</option>
+                </select>
+
+                <label class="form-label">Wifi</label>
+                <select name="Wifi"  [(ngModel)]="wifiText" class="form-select mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+                  <option *ngFor="let wifi of wifi" value="{{wifi.idwifi}}" >{{wifi.nombre}}</option>
+                </select>
+
+                <label class="form-label">Conexion Nodo</label>
+                <select name="Nodo" [(ngModel)]="nodoText" class="form-select mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+                  <option *ngFor="let nodo of nodo" value="{{nodo.idconexionNodo}}" >{{nodo.nombre}}</option>
+                </select>
+
+                <label class="form-label">tipo Equipo</label>
+                <select name="tipoEquipoText" [(ngModel)]="tipoEquipoText" class="form-select mb-3 bg-dark border-secondary text-white" aria-label="Default select example">
+                  <option *ngFor="let equipo of tipEquipos"  value="{{equipo.idtipoEquipo}}" >{{equipo.nombreEquipo}}</option>
+                </select>
+
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button (click)="registrarActivoFijo()" type="button" class="btn btn-primary">Registrar</button>
+          </div>
+
+        </form>
+
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+<ng-progress></ng-progress>

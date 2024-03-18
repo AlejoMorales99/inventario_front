@@ -1,0 +1,97 @@
+<!-- <div class="container text-center mt-5 center-container">
+
+  <div class="slide-in">
+
+
+
+    <div class=" w-100  " >
+
+
+      <form class="login-form  " (ngSubmit)="submitLogin()">
+
+        <h1 class="title text-white ">Login</h1>
+
+        <div class="form-group ">
+          <input type="text  " class="form-control bg-dark text-white border-secondary w-100 mx-auto" name="u" autocomplete="off" placeholder="Username"
+            required [(ngModel)]="username" />
+        </div><br>
+
+        <div class="form-group">
+          <input type="password" class="form-control bg-dark text-white border-secondary  w-100 mx-auto" name="p" autocomplete="off" placeholder="Password"
+            required [(ngModel)]="password" />
+        </div> <br>
+
+        <button type="submit" class="btn w-100 btn-primary btn-block btn-large">Iniciar Sesión</button>
+
+      </form>
+    </div>
+
+
+  </div>
+
+
+
+</div> -->
+
+
+<section class="vh-100 " >
+  <div class="container py-5 h-100 ">
+    <div class="row  d-flex justify-content-center align-items-center h-100">
+      <div class="col  col-xl-10 ">
+        <div class="card p-3 bg-dark  borderOscuro"  >
+          <div class="row    g-0">
+            <div class="col-md-6   col-lg-5 d-none d-md-block">
+              <img  src="../../assets/imgs/pexels-winson-2701434.jpg"
+                alt="login form" class="img-fluid rounded "  />
+            </div>
+            <div class="col-md-6   col-lg-7 d-flex align-items-center" >
+              <div class="card-body p-4 p-lg-5 text-black">
+
+                <form (ngSubmit)="submitLogin()" >
+
+                  <div class="d-flex align-items-center mb-3 pb-1">
+                    <span class="h1 text-white fw-bold mb-0">Login de inventario</span>
+                  </div>
+
+
+
+
+                  <div class="form-outline mb-4">
+                    <div class="input-group position-relative">
+                      <span class="input-group-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                        </svg>
+                      </span>
+                      <input type="text" autocomplete="off" name="u" required [(ngModel)]="username" placeholder="Nombre de usuario" class="form-control bg-dark text-white border-secondary form-control-lg" />
+                    </div>
+                  </div>
+
+
+                  <div class="form-outline mb-4">
+                    <div class="input-group position-relative">
+                      <span class="input-group-text">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
+                          <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                        </svg>
+                      </span>
+                      <input type="number"  id="myNumberInput" autocomplete="off" name="p" required [(ngModel)]="password" placeholder="Contraseña" class="form-control bg-dark text-white border-secondary pass form-control-lg" />
+                    </div>
+                  </div>
+
+                  <div class="pt-1 mb-4">
+                    <button  class="btn  botonesActa text-white btn-lg btn-block" type="submit">Iniciar sesión</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

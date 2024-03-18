@@ -1,0 +1,64 @@
+.center-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.borderOscuro{
+  border: 1px solid black!important;
+  border-radius: 1rem;
+}
+
+
+
+  @media (min-width: 768px) {
+  .gradient-form {
+  height: 100vh !important;
+  }
+  }
+  @media (min-width: 769px) {
+
+  }
+
+  .input-group {
+    width: 100%;
+    position: relative;
+}
+
+.input-group input {
+    padding-right: 40px; /* Ajusta el valor según el tamaño de tu icono */
+}
+
+.icon-input {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    z-index: 1; /* Agrega z-index para controlar la capa de superposición */
+}
+
+.botonesActa{
+  background-color: #0099ef;
+}
+
+.botonesActa:hover{
+  background-color: #1B74A7;
+}
+
+.pass{
+  -webkit-text-security: disc; /* Para navegadores webkit (Chrome, Safari) */
+  text-security: disc; /* Para navegadores compatibles con la propiedad 'text-security' */
+}
+
+#myNumberInput::-webkit-inner-spin-button,
+#myNumberInput::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+.moverImagenDerecha{
+  margin-left: 2px;
+
+}

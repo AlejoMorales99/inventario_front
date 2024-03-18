@@ -1,0 +1,146 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid  slide-in  p-5 ">
+
+  <div class="row borderTable ">
+
+    <div class="fondoTable  text-white text-center p-3 " >
+      INVENTARIO TECNICOS
+    </div>
+
+    <div class="col-md-12">
+
+        <div class="row  rounded table-responsive">
+
+          <label *ngIf="validarTotalOnts" class="text-white mt-3" for="">TOTAL ONTS EN EL INVENTARIO DEL TECNICO:   {{totalOnts[0].total}}</label>
+          <div class="mb-3 d-md-flex flex-md-row flex-md-nowrap align-items-center mt-4">
+
+
+
+            <ng-select class="form-select bg-dark text-white border-secondary w-25 mx-2" aria-label="Default select example" (change)="listarInventarioTecnicos($event)" [bindLabel]="'tercerocol'" [bindValue]="'idservicio'">
+              <ng-option class="text-white" *ngFor="let tecnicos of inventarioTecnicos" [value]="tecnicos">{{tecnicos.tercerocol}}</ng-option>
+            </ng-select>
+
+            <input  *ngIf="ocultarNombreCompletoTecnico" disabled  type="text" value="{{nombreTecnicoCompleto.data[0].apellidos}}"  class="form-control w-25 bg-dark border-secondary text-white">
+
+          </div>
+
+
+
+          <table    class="table table-dark table-hover  text-white hover text-center">
+            <thead>
+              <tr>
+                <th scope="col" class="tamañoTitulos" (click)="cambiarOrden('numeroActivo')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'numeroActivo' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'numeroActivo' && config.sortOrder === 'desc'}" >NÚMERO ACTIVO FIJO</th>
+                <th scope="col" class="tamañoTitulos"(click)="cambiarOrden('MAC')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'MAC' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'MAC' && config.sortOrder === 'desc'}" >SERIAL</th>
+                <th scope="col" class="tamañoTitulos"(click)="cambiarOrden('macSerial')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'macSerial' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'macSerial' && config.sortOrder === 'desc'}" >MAC</th>
+                <th scope="col" class="tamañoTitulos"(click)="cambiarOrden('fechaIngreso')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'fechaIngreso' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'fechaIngreso' && config.sortOrder === 'desc'}" >FECHA_INGRESO</th>
+                <th scope="col" class="tamañoTitulos"(click)="cambiarOrden('categoria')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'categoria' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'categoria' && config.sortOrder === 'desc'}" >CATEGORÍA</th>
+                <th scope="col" class="tamañoTitulos"(click)="cambiarOrden('estado')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'estado' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'estado' && config.sortOrder === 'desc'}" >ESTADO</th>
+                <th scope="col" class="tamañoTitulos"(click)="cambiarOrden('proveedor')" [ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'proveedor' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'proveedor' && config.sortOrder === 'desc'}" >PROVEEDOR</th>
+
+
+              </tr>
+            </thead>
+            <tbody>
+
+               <tr *ngFor="let activosFijosTecnicos of activosFijosTecnicos  | orderBy:config.sortKey:config.sortReverse   | paginate: { itemsPerPage: itemsPerPage, currentPage:  page } " >
+
+                <td>{{activosFijosTecnicos.numeroActivo}} </td>
+                <td>{{activosFijosTecnicos.serial}}</td>
+                <td>{{activosFijosTecnicos.MAC}}</td>
+                <td>{{activosFijosTecnicos.fechaIngreso}}</td>
+                <td>{{activosFijosTecnicos.categoria}}</td>
+                <td>{{activosFijosTecnicos.estado}}</td>
+                <td>{{activosFijosTecnicos.proveedor}}</td>
+              </tr>
+
+            </tbody>
+          </table>
+          <div class="d-flex slide-in justify-content-center mt-3 flex-wrap">
+
+          <!-- Opciones de cantidad de registros por página -->
+          <label class="text-white" for="itemsPerPage">Registros por página:</label>
+          <div class="mx-2 ">
+            <select class="form-select bg-dark text-white border-secondary w-100 mx-2 " id="itemsPerPage"
+              [(ngModel)]="itemsPerPage" (change)="actualizarPaginacion()">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">40</option>
+              <option value="70">70</option>
+              <!-- Agrega más opciones según tus necesidades -->
+            </select>
+          </div>
+          <!-- Componente de paginación -->
+          <pagination-controls (pageChange)="page = $event" class="custom-pagination  border-secondary text-white "
+            previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+        </div>
+
+
+
+
+        </div>
+
+    </div>
+
+
+    <div class="modal fade  "  id="modalActivosFijos" tabindex="-1" aria-labelledby="modalActivosFijos" aria-hidden="true">
+      <div class="modal-dialog  ">
+        <div class="modal-content bg-dark text-white ">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Crear nuevo tecnicp</h5>
+            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+
+            <form>
+
+              <div class="row">
+
+                <div class="col-md-12">
+
+                  <div class="mb-3">
+                    <label class="form-label">Nombre del tecnico</label>
+                    <input type="text"[(ngModel)]="crearNuevoTecnico"  name="nombreTecnico"  placeholder="Ingresa el nombre del tecnico"   class="form-control bg-dark border-secondary text-white">
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="modal-footer">
+
+                <button type="button" class="btn  btn-danger" data-bs-dismiss="modal">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                  </svg>
+
+                  Cerrar
+                </button>
+
+                <button (click)="registrarTecnicoNuevo()" type="button" class="btn botonesActa text-white">
+
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
+                  </svg>
+
+                  Registrar
+                </button>
+
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  </div> <br> <br><br>
+
+
+
+
+
+
+<ng-progress></ng-progress>

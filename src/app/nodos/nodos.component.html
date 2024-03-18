@@ -1,0 +1,119 @@
+<app-navbar></app-navbar>
+
+<div class="container slide-in mt-5 p-5 ">
+
+
+
+  <div class="row borderTable ">
+
+
+
+    <div class="fondoTable  text-white text-center p-3 " >
+      INVENTARIO NODOS
+    </div>
+
+
+    <div class="col-md-12">
+
+        <div class="row  rounded table-responsive">
+
+          <div class="mb-3 d-md-flex flex-md-row flex-md-nowrap align-items-center mt-4">
+
+            <input class="form-control mx-2 mb-2 mb-md-0 bg-dark border-secondary text-white w-auto w-md-25" placeholder="BUSCAR NODO" type="search" name="search" [(ngModel)]="buscarActivos" autocomplete="on" >
+            <button *ngIf="operacionesRol" (click)="limpiar()" type="button" class="btn btn-primary mx-5" data-bs-toggle="modal" data-bs-target="#modalActivosFijos">Registrar nuevo nodo</button>
+
+          </div>
+
+
+
+          <table    class="table   text-white hover text-center">
+            <thead>
+              <tr>
+                <th scope="col" class="tamañoTitulos" (click)="cambiarOrden('idactivoFijo')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'idactivoFijo' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'idactivoFijo' && config.sortOrder === 'desc'}" >ID</th>
+                <th scope="col" class="tamañoTitulos" (click)="cambiarOrden('numeroActivo')"[ngClass]="{'sortable': true, 'sort-asc': config.sortKey === 'numeroActivo' && config.sortOrder === 'asc', 'sort-desc': config.sortKey === 'numeroActivo' && config.sortOrder === 'desc'}" >NOMBRE</th>
+
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr *ngFor="let activosFijos of nodo | filter:buscarActivos  | orderBy:config.sortKey:config.sortReverse   | paginate: { itemsPerPage: itemsPerPage, currentPage:  page } " >
+                <th scope="row">{{activosFijos.idconexionNodo}}</th>
+                <td>{{activosFijos.nombre}} </td>
+
+
+               <!--  <td *ngIf="operacionesRol" ><button (click)="eliminarActivoFijo(activosFijos.idactivoFijo , activosFijos.referencia)" type="button" class="btn btn-danger" >Eliminar</button></td> -->
+              </tr>
+
+
+
+            </tbody>
+          </table>
+          <div class="d-flex  justify-content-center mt-3 flex-wrap">
+
+
+            <label class="text-white" for="itemsPerPage">Registros por página:</label>
+            <div class="mx-2" >
+              <select class="form-select w-100 bg-dark text-white border-secondary mx-2" id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="actualizarPaginacion()">
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <!-- Agrega más opciones según tus necesidades -->
+              </select>
+            </div>
+
+          <pagination-controls (pageChange)="page = $event" class="custom-pagination text-white " previousLabel="Anterior"
+          nextLabel="Siguiente"></pagination-controls>
+        </div>
+
+
+        </div>
+
+    </div>
+
+
+
+  </div> <br> <br><br>
+
+
+
+  <!--MODAL PARA REGISTRAR NUEVOS ACTIVOS-->
+   <div class="modal fade  "  id="modalActivosFijos" tabindex="-1" aria-labelledby="modalActivosFijos" aria-hidden="true">
+    <div class="modal-dialog  ">
+      <div class="modal-content bg-dark text-white ">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Registrar Nodo</h5>
+          <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+
+          <form>
+
+            <div class="row">
+
+              <div class="col-md-6">
+
+                <div class="mb-3">
+                  <label class="form-label">Nodo</label>
+                  <input type="text" name="nodo  "  placeholder="Ingresa el nodo" [(ngModel)]="textNodo" class="form-control bg-dark border-secondary text-white">
+                </div>
+
+
+              </div>
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              <button (click)="registrarActivoFijo()" type="button" class="btn btn-primary">Registrar</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<ng-progress></ng-progress>

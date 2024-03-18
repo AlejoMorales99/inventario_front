@@ -1,0 +1,116 @@
+.fondoTable{
+  background-color: #0099ef;
+}
+
+.botonesActa{
+  background-color: #0099ef;
+}
+
+.botonesActaCerrar{
+  background-color: #a51d2a;
+}
+
+.botonesActa:hover{
+  background-color: #1B74A7;
+}
+
+
+
+::-webkit-scrollbar {
+  width: 10px; /* Ancho del scroll */
+}
+
+::-webkit-scrollbar-track {
+  background: #24292E; /* Color de fondo del track (fondo detrás del scroll) */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color del thumb (la parte arrastrable del scroll) */
+}
+
+td  {
+  border-color: gray;
+}
+
+th{
+  border-color: gray;
+}
+
+.borderTable{
+  border: solid 1px #0099ef;
+  border-radius: 4px;
+  box-shadow: 20px 20px 10px 0px rgba(0,0,0,0.75);
+}
+
+.tamañoTitulos{
+  font-size: 11px;
+}
+
+.tamañoInformacion{
+  font-size: 14px;
+}
+
+
+.bajarTexto{
+  margin-top: 20px;
+}
+
+/* Ocultar los botones de aumento y disminución en el input de tipo number */
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  appearance: none; /* Otros navegadores */
+}
+
+/* Para navegadores basados en Webkit (como Chrome y Safari) */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+
+.custom-checkbox:checked {
+  background-image: url("../../../assets/imgs/x.jpg");
+  border-color: red;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+@media (max-width: 450px) {
+  .botonesActa {
+    width: 250px!important;
+  }
+}
+
+@media (max-width: 450px) {
+  .botonesActaCancelar {
+    width: 250px!important;
+  }
+}
+
+
+@media (max-width: 450px) {
+  .botonesCrearActaMovimiento {
+    width: 120px!important;
+  }
+}
+
+::ng-deep .ng-dropdown-panel {
+  background-color: #24292E;
+  padding: 5px;
+  border-radius: 10px;
+  margin-left: -12px;
+  border: solid black 1px;
+  margin-top: 6px;
+  border: solid gray 1px;
+}
+
+/* Cambia el color del texto dentro del panel desplegable (opcional) */
+::ng-deep .ng-dropdown-panel .ng-option {
+  color: white;
+}
+
+

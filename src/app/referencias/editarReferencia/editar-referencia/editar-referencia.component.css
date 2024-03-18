@@ -1,0 +1,20 @@
+.fondoTable{
+  background-color: #0099ef;
+}
+
+
+.borderTable{
+  border: solid 1px #0099ef;
+  border-radius: 4px;
+  box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
+}
+
+.botonesActa{
+  background-color: #0099ef;
+}
+
+.botonesActa:hover{
+  background-color: #1B74A7;
+}
+
+

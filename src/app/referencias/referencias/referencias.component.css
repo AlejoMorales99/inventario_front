@@ -1,0 +1,34 @@
+.fondoTable{
+  background-color: #0099ef;
+}
+
+::-webkit-scrollbar {
+  width: 10px; /* Ancho del scroll */
+}
+
+::-webkit-scrollbar-track {
+  background: #24292E; /* Color de fondo del track (fondo detrás del scroll) */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color del thumb (la parte arrastrable del scroll) */
+}
+
+td  {
+  border-color: gray;
+}
+
+th{
+  border-color: gray;
+}
+
+.borderTable{
+  border: solid 1px #0099ef;
+  border-radius: 4px;
+  box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
+}
+
+
+.tamañoTitulos{
+  font-size: 12px;
+}

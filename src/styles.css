@@ -1,0 +1,78 @@
+
+.slide-in {
+  animation: slide-in 0.8s ease;
+}
+
+/*24292E*/
+body{
+  background-color: #2F353C;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+th.sortable {
+  cursor: pointer;
+}
+
+
+
+th.sort-asc::after,
+th.sort-desc::after {
+  content: '';
+  display: inline-block;
+  margin-left: 5px;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  border: 4px solid transparent;
+}
+
+th.sort-asc::after {
+  border-bottom-color: white;
+}
+
+th.sort-desc::after {
+  border-top-color: white;
+}
+
+.ngx-pagination a:hover,
+.ngx-pagination button:hover {
+  background: #788b8d88 !important;
+}
+
+
+.ngx-pagination {
+  padding-left: 0px !important;
+}
+
+.ngx-pagination .current,
+.btn-info {
+  background: #17a2b8 !important;
+  border: transparent !important;
+  border-radius: 20px !important;
+}
+
+.ngx-pagination .current:hover {
+  background: #17a2b8 !important;
+  border-radius: 20px !important;
+  border: transparent !important;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+ng-select input {
+  color: white !important; /* Puedes ajustar el color según tus necesidades */
+}
+
