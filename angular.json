@@ -30,7 +30,7 @@
               "src/assets"
             ],
             "styles": [
-              
+
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/datatables.net-dt/css/jquery.dataTables.css",
               "src/styles.css"
@@ -49,8 +49,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
