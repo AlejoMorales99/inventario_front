@@ -8,4 +8,3 @@ RUN npm run build --prod
 # Etapa de producción
 FROM nginx:alpine
 COPY --from=node /app/dist/inventario-bit-wan /usr/share/nginx/html
-
