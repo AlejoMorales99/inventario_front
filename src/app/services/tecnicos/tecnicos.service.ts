@@ -1,4 +1,4 @@
-import { tecnicos } from './../../models/tecnicos';
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -14,10 +14,10 @@ export class TecnicosService {
   constructor(private http: HttpClient) { }
 
 
-  urlTecnicos: String = environment.apiUrl
+  urlTecnicos: String = environment.ip_server_pruebas
 
   getTecnicos(){
-    return this.http.get<tecnicos[]>(`${this.urlTecnicos}`)
+    return this.http.get(`${this.urlTecnicos}`)
   }
 
 

@@ -9,7 +9,7 @@ import { environment } from '../../../../dotenv';
 export class NodoService {
 
 
-  urlNodo: String = environment.apiUrl;
+  urlNodo: String = environment.ip_server_pruebas;
 
   constructor(private http: HttpClient , private loginServices: LoginService) { }
 

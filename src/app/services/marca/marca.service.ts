@@ -8,7 +8,7 @@ import { environment } from '../../../../dotenv';
 })
 export class MarcaService {
 
-  urlMarca: String = environment.apiUrl;
+  urlMarca: String = environment.ip_server_pruebas;
 
   constructor(private http: HttpClient , private loginServices: LoginService) { }
 
