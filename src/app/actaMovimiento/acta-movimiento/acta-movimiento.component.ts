@@ -13,7 +13,7 @@ import { environment } from '../../../../dotenv';
 })
 export class ActaMovimientoComponent implements OnInit {
 
-  apiUrlImg = environment.ip_server_pruebas;
+  apiUrlImg = environment.apiUrl;
 
   //en esta variblae tipo Element guardo el id de la ont que se busque en el input del formulario
   @ViewChild('valorOnts') miInput!: ElementRef;
@@ -1096,9 +1096,9 @@ export class ActaMovimientoComponent implements OnInit {
       newWindow.document.write(`<html><body><img src="${imagenUrl}" alt="${nombreImagen}" /></body></html>`);
       newWindow.document.close();
     } else {
-      // Manejar el caso en el que el navegador bloquea las ventanas emergentes
+     
       console.error('El navegador bloqueó la apertura de ventanas emergentes');
-      // Puedes mostrar un mensaje al usuario o tomar otras medidas según sea necesario
+
     }
   }
 
