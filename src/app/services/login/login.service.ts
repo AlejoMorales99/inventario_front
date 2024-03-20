@@ -9,7 +9,7 @@ import { environment } from '../../../../dotenv';
 export class LoginService {
 
 
-  urlActivosFijos: String = environment.ip_server_pruebas
+  urlActivosFijos: String = environment.apiUrl
 
   url: String = "http://localhost:4001/getBodegas"
   urlServicios:string = "http://104.131.8.122:8000/login"
