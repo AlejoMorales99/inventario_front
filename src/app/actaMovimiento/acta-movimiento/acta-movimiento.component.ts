@@ -1178,7 +1178,8 @@ export class ActaMovimientoComponent implements OnInit {
 
   //funcion que uso para dependiendo de la operacion de la acta instalacion retiro devolucion a central etc mostrar mas inputs o mostrar menos saber cuales son obligatorios cuales no etc
   validarCampos(evento: any) {
-
+    this.BodegaSale = "";
+    this.BodegaEntra = "";
     const selectedIndex = evento.selectedIndex;
     this.valorNombreBodega = evento.options[selectedIndex].text;
 
@@ -1327,6 +1328,8 @@ export class ActaMovimientoComponent implements OnInit {
     }
     this.BodegaSale = "";
     this.BodegaEntra = "";
+
+
 
 
     this.anular = false;
