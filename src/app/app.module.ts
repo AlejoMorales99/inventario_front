@@ -36,6 +36,14 @@ import { TecnicosComponent } from './tecnicos/tecnicos/tecnicos.component';
 import { EditarReferenciaComponent } from './referencias/editarReferencia/editar-referencia/editar-referencia.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TipoEquipoComponent } from './tipoEquipo/tipo-equipo/tipo-equipo.component';
+import { EditarWifiComponent } from './wifi/editarWifi/editar-wifi/editar-wifi.component';
+import { EditarNodoComponent } from './nodos/editarNodo/editar-nodo/editar-nodo.component';
+import { EditarMarcaComponent } from './marcas/editarMarca/editar-marca/editar-marca.component';
+import { EditarCategoriaComponent } from './categorias/editarCategoria/editar-categoria/editar-categoria.component';
+import { EditarEstadoComponent } from './estados/editarEstado/editar-estado/editar-estado.component';
+import { EditarProveedorComponent } from './proveedores/editarProveedor/editar-proveedor/editar-proveedor.component';
+import { EditarTipoDeEquipoComponent } from './tipoEquipo/editarTipoDeEquipo/editar-tipo-de-equipo/editar-tipo-de-equipo.component';
+
 
 
 const appRoutes: Routes = [
@@ -57,24 +65,46 @@ const appRoutes: Routes = [
   //wifi
   { path: 'wifi' , component: WifiComponent},
 
+  //editarWifi
+  { path: 'wifiEditar/:id' , component: EditarWifiComponent},
+
   //nodo
   { path: 'Nodos' , component: NodosComponent},
+
+  //editarNodo
+  { path: 'NodoEditar/:id' , component: EditarNodoComponent},
+
+
 
   //marca
   { path: 'marca' , component: MarcasComponent},
 
+  //marcaEditar
+  { path: 'marcaEditar/:id' , component: EditarMarcaComponent},
+
   //estados
   { path: 'estados' , component: EstadosComponent},
+
+  //editarEstados
+  { path: 'editarEstados/:id' , component: EditarEstadoComponent},
 
   //categorias
   { path: 'categorias' , component: CategoriasComponent},
 
+  //editarCategoria
+  { path: 'categoriasEditar/:id' , component: EditarCategoriaComponent},
+
   //categorias
   { path: 'proveedores' , component: ProveedoresComponent},
+
+  //editarProveedor
+  { path: 'editarProveedores/:id' , component: EditarProveedorComponent},
 
   //tipoEquipo
   { path: 'tipoEquipo' , component: TipoEquipoComponent},
 
+  //editarEquipo
+  { path: 'editarEquipo/:id' , component: EditarTipoDeEquipoComponent},
 
   { path: 'editarActivoFijo/:id' , component: EditarActivoFijoComponent},
 
@@ -106,7 +136,14 @@ const appRoutes: Routes = [
     ActaMovimientoComponent,
     TecnicosComponent,
     EditarReferenciaComponent,
-    TipoEquipoComponent
+    TipoEquipoComponent,
+    EditarWifiComponent,
+    EditarNodoComponent,
+    EditarMarcaComponent,
+    EditarCategoriaComponent,
+    EditarEstadoComponent,
+    EditarProveedorComponent,
+    EditarTipoDeEquipoComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

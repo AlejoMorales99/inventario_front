@@ -9,7 +9,7 @@ import { environment } from '../../../../dotenv';
 export class ProveedorService {
 
 
-  urlProveedor: String = environment.ip_server_pruebas;
+  urlProveedor: String = environment.apiUrl;
 
   constructor(private http: HttpClient , private loginServices: LoginService) { }
 
@@ -31,6 +31,27 @@ export class ProveedorService {
     const headers = this.loginServices.getAuthHeaders();
 
     return this.http.get(`${this.urlProveedor}/getProveedor` , {headers} )
+  }
+
+  getOneProveedor(idProveedor:string){
+    const headers = this.loginServices.getAuthHeaders();
+
+    return this.http.get(`${this.urlProveedor}/getOneProveedor/${idProveedor}` , {headers} )
+  }
+
+
+
+  putProveedor(idProveedor:string,proveedor:string){
+    const headers = this.loginServices.getAuthHeaders();
+
+    const data = {
+      idProveedor:idProveedor,
+      proveedor:proveedor
+    }
+
+    return this.http.put(`${this.urlProveedor}/putProveedor` , data , {headers} )
+
+
   }
 
 

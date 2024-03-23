@@ -9,7 +9,7 @@ import { environment } from '../../../../dotenv';
 export class ReferenciasService {
 
 
-  urlActivosFijos: String = environment.ip_server_pruebas
+  urlActivosFijos: String = environment.apiUrl
 
   constructor(private http: HttpClient, private loginServices: LoginService) { }
 

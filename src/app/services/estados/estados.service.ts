@@ -9,7 +9,7 @@ import { environment } from '../../../../dotenv';
 })
 export class EstadosService {
 
-  urlEstados: String = environment.ip_server_pruebas
+  urlEstados: String = environment.apiUrl
 
   constructor(private http: HttpClient , private loginServices: LoginService) { }
 
@@ -31,6 +31,27 @@ export class EstadosService {
     const headers = this.loginServices.getAuthHeaders();
 
     return this.http.get(`${this.urlEstados}/getEstados` , {headers} )
+  }
+
+  getOneEstados(idEstado:string){
+
+    const headers = this.loginServices.getAuthHeaders();
+
+    return this.http.get(`${this.urlEstados}/getOneEstados/${idEstado}` , {headers} )
+  }
+
+
+  putEstados(idEstados:string,estado:string){
+    const headers = this.loginServices.getAuthHeaders();
+
+    const data = {
+      idEstados:idEstados,
+      estado:estado
+    }
+
+    return this.http.put(`${this.urlEstados}/putEstados` , data , {headers} )
+
+
   }
 
 

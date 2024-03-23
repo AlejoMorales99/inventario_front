@@ -8,7 +8,7 @@ import { environment } from '../../../../dotenv';
 })
 export class CategoriasService {
 
-  urlCategorias: String = environment.ip_server_pruebas;
+  urlCategorias: String = environment.apiUrl;
 
   constructor(private http: HttpClient , private loginServices: LoginService) { }
 
@@ -30,6 +30,27 @@ export class CategoriasService {
     const headers = this.loginServices.getAuthHeaders();
 
     return this.http.get(`${this.urlCategorias}/getCategoria` , {headers} )
+  }
+
+
+  getOneCategoria(idCategoria:string){
+    const headers = this.loginServices.getAuthHeaders();
+
+    return this.http.get(`${this.urlCategorias}/getOneCategoria/${idCategoria}` , {headers} )
+  }
+
+
+  putCategorias(idCategoria:string,categoria:string){
+    const headers = this.loginServices.getAuthHeaders();
+
+    const data = {
+      idCategoria:idCategoria,
+      categoria:categoria
+    }
+
+    return this.http.put(`${this.urlCategorias}/putCategoria` , data , {headers} )
+
+
   }
 
 

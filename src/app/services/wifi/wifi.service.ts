@@ -8,7 +8,7 @@ import { environment } from '../../../../dotenv';
 })
 export class WifiService {
 
-  urlWifi: String = environment.ip_server_pruebas
+  urlWifi: String = environment.apiUrl
 
   constructor(private http: HttpClient , private loginServices: LoginService) { }
 
@@ -37,6 +37,17 @@ export class WifiService {
     return this.http.get(`${this.urlWifi}/getOneWifi/${id}` , {headers} )
   }
 
+
+  putWifi(idwifi:string,nombreWifi:string){
+    const headers = this.loginServices.getAuthHeaders();
+
+    const objectWifi = {
+      idwifi:idwifi,
+      nombreWifi:nombreWifi
+    }
+
+    return this.http.put(`${this.urlWifi}/wifiEditar` , objectWifi, {headers} )
+  }
 
 
 }

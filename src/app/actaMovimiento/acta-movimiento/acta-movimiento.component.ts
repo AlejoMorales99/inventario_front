@@ -13,7 +13,7 @@ import { environment } from '../../../../dotenv';
 })
 export class ActaMovimientoComponent implements OnInit {
 
-  apiUrlImg = environment.ip_server_pruebas;
+  apiUrlImg = environment.apiUrl;
 
   //en esta variblae tipo Element guardo el id de la ont que se busque en el input del formulario
   @ViewChild('valorOnts') miInput!: ElementRef;

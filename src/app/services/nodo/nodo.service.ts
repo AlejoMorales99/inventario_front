@@ -9,7 +9,7 @@ import { environment } from '../../../../dotenv';
 export class NodoService {
 
 
-  urlNodo: String = environment.ip_server_pruebas;
+  urlNodo: String = environment.apiUrl;
 
   constructor(private http: HttpClient , private loginServices: LoginService) { }
 
@@ -32,6 +32,27 @@ export class NodoService {
     const headers = this.loginServices.getAuthHeaders();
 
     return this.http.get(`${this.urlNodo}/getNodo` , {headers} )
+  }
+
+
+  getOneNodo(idNodo:string){
+    const headers = this.loginServices.getAuthHeaders();
+
+    return this.http.get(`${this.urlNodo}/getOneNodo/${idNodo}` , {headers} )
+  }
+
+
+
+  putNodo(idNodo:string,nodo:string){
+    const headers = this.loginServices.getAuthHeaders();
+
+
+    const objectNodo = {
+      idNodo:idNodo,
+      nodo:nodo
+    }
+
+    return this.http.put(`${this.urlNodo}/putNodo` , objectNodo ,{headers} )
   }
 
 
