@@ -1,0 +1,37 @@
+.fondoTable{
+  background-color: #0099ef;
+}
+
+
+.borderTable{
+  border: solid 1px #0099ef;
+  border-radius: 4px;
+  box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
+}
+
+.botonesActa{
+  background-color: #0099ef;
+}
+
+.botonesActa:hover{
+  background-color: #1B74A7;
+}
+
+::ng-deep .ng-dropdown-panel {
+  background-color: #24292E;
+  padding: 5px;
+  border-radius: 10px;
+  margin-left: -12px;
+  border: solid black 1px;
+  margin-top: 6px;
+  color: white!important;
+  border: solid gray 1px;
+}
+
+/* Cambia el color del texto dentro del panel desplegable (opcional) */
+::ng-deep .ng-dropdown-panel .ng-option {
+  color: white!important;
+}
+
+
+
